@@ -15,7 +15,7 @@ List<int> getArrayInput() {
       } catch (e) {
         throw FormatException('Geçersiz değer: $e');
       }
-    }).toList();
+    }).where((number) => number != null).toList(); 
   } catch (e) {
     throw ArgumentError('Hata: Geçersiz bir değer/değerler girdiniz.');
   }
