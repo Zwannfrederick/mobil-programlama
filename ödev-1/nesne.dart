@@ -6,49 +6,49 @@ class NotSistemi {
   List<double> notlar = [];
 
   NotSistemi() {
-    print('Lütfen Ad ve Soyadınızı girin: ');
+    print('Please enter your first and last name: ');
     String? input = stdin.readLineSync();
     if (input == null || input.trim().isEmpty) {
-      throw FormatException('Boş veya geçersiz isim.');
+      throw FormatException('Invalid input. Name cannot be empty.');
     }
     List<String> inputs = input.split(" ");
     if (inputs.length < 2) {
-      throw FormatException('Ad ve soyad formatına uygun girilmelidir. Örn: Ad Soyad');
+      throw FormatException('Please enter in the format: First Last');
     }
     soyad = inputs.last.trim(); 
     ad = inputs.sublist(0, inputs.length - 1).join(" "); 
   }
 
   void notEkle() {
-    print('Lütfen notu girin:');
+    print('Please enter a grade:');
     String? input = stdin.readLineSync();
     
     if (input == null || input.trim().isEmpty) {
-      print('Girdi boş olamaz. Lütfen tekrar deneyin.');
+      print('Input cannot be empty. Please try again.');
       return;
     }
 
     try {
       double not = double.parse(input.trim());
       if (not < 0 || not > 100) {
-        throw ArgumentError('Notlar 0 ile 100 arasında olmalıdır.');
+        throw ArgumentError('Grades must be between 0 and 100.');
       }
       notlar.add(not);
-      print('Not başarıyla eklendi: $not');
+      print('Grade successfully added: $not');
     } catch (e) {
-      print('Geçersiz not değeri girdiniz: $e');  
+      print('Invalid grade value entered: $e');  
     }
   }
 
   void ortalamaHesapla() {
     if (notlar.isEmpty) {
-      print('Notlar listesi boş. Ortalama hesaplanamaz.');
+      print('Grade list is empty. Cannot calculate average.');
       return;
     }
 
     double toplam = notlar.reduce((a, b) => a + b);
     double ortalama = toplam / notlar.length;
-    print('$ad $soyad için not ortalaması: $ortalama');
+    print('Average grade for $ad $soyad: $ortalama');
   }
 }
 
@@ -57,39 +57,33 @@ void main() {
     NotSistemi sistem = NotSistemi();
 
     while (true) {
-      print('Bir komut girin: "not ekle" veya "hesapla". Programı bitirmek için "çık" yazabilirsiniz.');
-      String? komut = stdin.readLineSync();
+      print('Enter a command: "add grade" or "calculate". Type "exit" to quit the program.');
+      String? command = stdin.readLineSync();
 
-      if (komut == null || komut.trim().isEmpty) {
-        print('Girdi boş olamaz. Lütfen tekrar deneyin.');
+      if (command == null || command.trim().isEmpty) {
+        print('Input cannot be empty. Please try again.');
         continue;
       }
 
-      komut = komut.trim().toLowerCase(); .
+      command = command.trim().toLowerCase();  
 
-      if (komut == 'hesapla') {
-        try {
-          sistem.ortalamaHesapla();  
-        } catch (e) {
-          print('Hata: $e');  
-        }
+      if (command == 'calculate') {
+        sistem.ortalamaHesapla();  
       }
-      else if (komut == 'not ekle') {
-        try {
-          sistem.notEkle(); 
-        } catch (e) {
-          print('Hata: $e'); 
-        }
+      else if (command == 'add grade') {
+        sistem.notEkle(); 
       }
-      else if (komut == 'çık') {
-        print('Programdan çıkılıyor...');
+      else if (command == 'exit') {
+        print('Exiting the program...');
         break;
       }
       else {
-        print('Geçersiz komut! Lütfen "not ekle", "hesapla" ya da "çık" yazın.');
+        print('Invalid command! Please enter "add grade", "calculate", or "exit".');
       }
     }
   } catch (e) {
-    print('Hata: $e');  
+    print('Error: $e');  
   }
 }
+
+
