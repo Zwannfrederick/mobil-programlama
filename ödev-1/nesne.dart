@@ -20,40 +20,34 @@ class NotSistemi {
   }
 
   void notEkle() {
-    print('Lütfen notları girin (örnek: 80 90): ');
+    print('Lütfen notu girin:');
     String? input = stdin.readLineSync();
     
     if (input == null || input.trim().isEmpty) {
-      throw ArgumentError('Not girişi boş olamaz.');
+      print('Girdi boş olamaz. Lütfen tekrar deneyin.');
+      return;
     }
 
-    List<String> inputs = input.split(" ");
-    
     try {
-      notlar = inputs.map((e) {
-        double not = double.parse(e.trim());
-        if (not < 0 || not > 100) {
-          throw ArgumentError('Notlar 0 ile 100 arasında olmalıdır: $not');
-        }
-        return not;
-      }).toList();
-
-      if (notlar.length < 2) {
-        throw ArgumentError('En az 2 not girişi gerekmektedir.');
+      double not = double.parse(input.trim());
+      if (not < 0 || not > 100) {
+        throw ArgumentError('Notlar 0 ile 100 arasında olmalıdır.');
       }
-
+      notlar.add(not);
+      print('Not başarıyla eklendi: $not');
     } catch (e) {
-      throw FormatException('Geçersiz not değeri girdiniz: $e');
+      print('Geçersiz not değeri girdiniz: $e');  
     }
   }
 
   void ortalamaHesapla() {
     if (notlar.isEmpty) {
-      throw ArgumentError('Notlar listesi boş. Ortalama hesaplanamaz.');
+      print('Notlar listesi boş. Ortalama hesaplanamaz.');
+      return;
     }
 
     double toplam = notlar.reduce((a, b) => a + b);
-    double ortalama = toplam / notlar.length; 
+    double ortalama = toplam / notlar.length;
     print('$ad $soyad için not ortalaması: $ortalama');
   }
 }
@@ -61,9 +55,41 @@ class NotSistemi {
 void main() {
   try {
     NotSistemi sistem = NotSistemi();
-    sistem.notEkle();
-    sistem.ortalamaHesapla();
+
+    while (true) {
+      print('Bir komut girin: "not ekle" veya "hesapla". Programı bitirmek için "çık" yazabilirsiniz.');
+      String? komut = stdin.readLineSync();
+
+      if (komut == null || komut.trim().isEmpty) {
+        print('Girdi boş olamaz. Lütfen tekrar deneyin.');
+        continue;
+      }
+
+      komut = komut.trim().toLowerCase(); .
+
+      if (komut == 'hesapla') {
+        try {
+          sistem.ortalamaHesapla();  
+        } catch (e) {
+          print('Hata: $e');  
+        }
+      }
+      else if (komut == 'not ekle') {
+        try {
+          sistem.notEkle(); 
+        } catch (e) {
+          print('Hata: $e'); 
+        }
+      }
+      else if (komut == 'çık') {
+        print('Programdan çıkılıyor...');
+        break;
+      }
+      else {
+        print('Geçersiz komut! Lütfen "not ekle", "hesapla" ya da "çık" yazın.');
+      }
+    }
   } catch (e) {
-    print('Hata: $e');
+    print('Hata: $e');  
   }
 }
