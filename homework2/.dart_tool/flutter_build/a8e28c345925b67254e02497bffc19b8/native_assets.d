@@ -1,0 +1,1 @@
+ C:\\Users\\LENOVO\\mobil-programlama\\homework2\\.dart_tool\\flutter_build\\a8e28c345925b67254e02497bffc19b8\\native_assets.yaml: 
