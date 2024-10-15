@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
 }
 
 class ColorTransitionScreen extends StatefulWidget {
+  // Bu sınıfı tanımlıyoruz
   @override
   _ColorTransitionScreenState createState() => _ColorTransitionScreenState();
 }
@@ -34,15 +35,16 @@ class Colorbutton extends StatelessWidget {
 }
 
 class _ColorTransitionScreenState extends State<ColorTransitionScreen> {
-  Color backgroundColor = Color(0xFF000080);
+  // Fenerbahçe renkleri
+  Color backgroundColor = Color(0xFF003DA5);
   bool isNavyBlue = true;
 
   void _toggleColor() {
     setState(() {
       if (isNavyBlue) {
-        backgroundColor = Colors.yellow;
+        backgroundColor = Color(0xFFFFD200);
       } else {
-        backgroundColor = Color(0xFF000080);
+        backgroundColor = Color(0xFF003DA5);
       }
       isNavyBlue = !isNavyBlue;
     });
@@ -52,10 +54,18 @@ class _ColorTransitionScreenState extends State<ColorTransitionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Uygulama'),
+        title: Text(
+          'Uygulama',
+          style: TextStyle(
+            color: backgroundColor == Color(0xFFFFD200)
+                ? Colors.black
+                : Colors.white,
+          ), // Yazı rengi
+        ),
+        backgroundColor: backgroundColor, // AppBar rengi
       ),
       body: Container(
-        color: backgroundColor,
+        color: backgroundColor, // Arka plan rengi
         child: Center(
           child: Colorbutton(
             onPressed: _toggleColor,
