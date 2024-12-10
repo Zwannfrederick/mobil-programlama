@@ -7,6 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
 }
 
 class OgrenciListesi extends StatefulWidget {
+  const OgrenciListesi({super.key});
+
   @override
   _OgrenciListesiState createState() => _OgrenciListesiState();
 }
@@ -81,11 +85,11 @@ class _OgrenciListesiState extends State<OgrenciListesi> {
             children: [
               TextField(
                 controller: adController,
-                decoration: InputDecoration(labelText: 'Ad'),
+                decoration: const InputDecoration(labelText: 'Ad'),
               ),
               TextField(
                 controller: soyadController,
-                decoration: InputDecoration(labelText: 'Soyad'),
+                decoration: const InputDecoration(labelText: 'Soyad'),
               ),
               DropdownButtonFormField<String>(
                 value: selectedBolumAd,
@@ -100,20 +104,20 @@ class _OgrenciListesiState extends State<OgrenciListesi> {
                     child: Text(bolum['BolumAd']),
                   );
                 }).toList(),
-                decoration: InputDecoration(labelText: 'Bölüm'),
+                decoration: const InputDecoration(labelText: 'Bölüm'),
                 isExpanded: true,
               ),
             ],
           ),
           actions: [
             TextButton(
-              child: Text('İptal'),
+              child: const Text('İptal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: Text('Kaydet'),
+              child: const Text('Kaydet'),
               onPressed: () async {
                 final data = {
                   'Ad': adController.text,
@@ -140,16 +144,16 @@ class _OgrenciListesiState extends State<OgrenciListesi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Öğrenci Listesi'),
+        title: const Text('Öğrenci Listesi'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => showForm(),
           ),
         ],
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : errorMessage.isNotEmpty
               ? Center(child: Text(errorMessage))
               : ListView.builder(
@@ -157,7 +161,8 @@ class _OgrenciListesiState extends State<OgrenciListesi> {
                   itemBuilder: (context, index) {
                     final ogrenci = ogrenciler[index];
                     return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
                       child: ListTile(
                         title: Text('${ogrenci['Ad']} ${ogrenci['Soyad']}'),
                         subtitle: Text(
@@ -167,11 +172,11 @@ class _OgrenciListesiState extends State<OgrenciListesi> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.edit, color: Colors.blue),
+                              icon: const Icon(Icons.edit, color: Colors.blue),
                               onPressed: () => showForm(existingData: ogrenci),
                             ),
                             IconButton(
-                              icon: Icon(Icons.delete, color: Colors.red),
+                              icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () async {
                                 await api.deleteOgrenci(ogrenci['ogrenciID']);
                                 fetchData();
