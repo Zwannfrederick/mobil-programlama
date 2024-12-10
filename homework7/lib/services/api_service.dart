@@ -1,8 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class ApiService {
-  final String baseUrl = 'http://localhost:3000';
+  late final String baseUrl;
+
+  ApiService() {
+    if (kIsWeb) {
+      baseUrl = 'http://localhost:3000';
+    } else {
+      baseUrl =
+          Platform.isAndroid ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+    }
+  }
 
   // Öğrencileri getirme
   Future<List> getOgrenciler() async {
@@ -17,7 +28,6 @@ class ApiService {
 
   // Bölümleri getirme
   Future<List> getBolumler() async {
-    // Sabit liste yerine, API'den bölüm verilerini alabiliriz
     return [
       {'BolumAd': 'Bilgisayar Mühendisliği'},
       {'BolumAd': 'Makine Mühendisliği'},
