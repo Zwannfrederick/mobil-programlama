@@ -1,1 +1,2 @@
-Mobil programlama ödevleri için oluşturulmuş repodur. 
+# Mobil programlama 
+Ödevler için oluşturulmuş repodur. 
